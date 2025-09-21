@@ -1,44 +1,167 @@
+"use client";
+import { useState } from "react";
 import Link from "next/link";
 
 const days = [
-  { num: "D50", assignments: ["A50.1"] },
-  { num: "D51", assignments: ["A51.1", "A51.2", "A51.3", "A51.4"] },
-  { num: "D52", assignments: ["A52.1", "A52.2", "A52.3", "A52.4", "A52.5", "A52.6"] },
-  { num: "D53", assignments: ["A53.1", "A53.2", "A53.3"] },
-  { num: "D54", assignments: ["A54.1"] },
-  { num: "D55", assignments: ["A55.1", "A55.2"] },
-  { num: "D57", assignments: ["A57.1"] },
-  { num: "D58", assignments: ["A58.1"] },
-  { num: "D59", assignments: ["A59.1"] },
-  { num: "D68", assignments: ["A68.1"] },
-  { num: "D71", assignments: ["A71.1"] },
-  { num: "D72", assignments: ["A72.1"] },
-  { num: "D74", assignments: ["A74.1"] },
-  { num: "D78", assignments: ["A78.1"] },
-  { num: "D87", assignments: ["A87.1"] },
+  {
+    num: "D50",
+    assignments: [
+      { name: "A50.1", stack: ["HTML", "CSS", "JS"] }
+    ]
+  },
+  {
+    num: "D51",
+    assignments: [
+      { name: "A51.1", stack: ["HTML", "CSS",] },
+      { name: "A51.2", stack: ["HTML", "CSS",] },
+      { name: "A51.3", stack: ["HTML", "CSS",] },
+      { name: "A51.4", stack: ["HTML", "CSS",] }
+    ]
+  },
+  {
+    num: "D52",
+    assignments: [
+      { name: "A52.1", stack: ["HTML", "Tailwind"] },
+      { name: "A52.2", stack: ["HTML", "Tailwind"] },
+      { name: "A52.3", stack: ["HTML", "Tailwind"] },
+      { name: "A52.4", stack: ["HTML", "Tailwind"] },
+      { name: "A52.5", stack: ["HTML", "Tailwind"] },
+      { name: "A52.6", stack: ["HTML", "Tailwind"] }
+    ]
+  },
+  {
+    num: "D53",
+    assignments: [
+      { name: "A53.1", stack: ["HTML", "Tailwind"] },
+      { name: "A53.2", stack: ["HTML", "Tailwind"] },
+      { name: "A53.3", stack: ["HTML", "Tailwind"] }
+    ]
+  },
+  {
+    num: "D54",
+    assignments: [
+      { name: "A54.1", stack: ["HTML", "CSS", "JS", "React", "Tailwind"] }
+    ]
+  },
+  {
+    num: "D55",
+    assignments: [
+      { name: "A55.1", stack: ["HTML", "CSS", "JS", "React", "Tailwind"] },
+      { name: "A55.2", stack: ["HTML", "CSS", "JS", "React", "Tailwind"] }
+    ]
+  },
+  {
+    num: "D57",
+    assignments: [
+      { name: "A57.1", stack: ["HTML", "CSS", "JS", "React", "Tailwind"] }
+    ]
+  },
+  {
+    num: "D58",
+    assignments: [
+      { name: "A58.1", stack: ["HTML", "CSS", "JS", "React", "Tailwind"] }
+    ]
+  },
+  {
+    num: "D59",
+    assignments: [
+      { name: "A59.1", stack: ["HTML", "CSS", "JS", "React", "Tailwind"] }
+    ]
+  },
+  {
+    num: "D68",
+    assignments: [
+      { name: "A68.1", stack: ["HTML", "CSS", "JS", "React", "Tailwind"] }
+    ]
+  },
+  {
+    num: "D71",
+    assignments: [
+      { name: "A71.1", stack: ["HTML", "CSS", "JS", "React", "Tailwind"] }
+    ]
+  },
+  {
+    num: "D72",
+    assignments: [
+      { name: "A72.1", stack: ["HTML", "CSS", "JS", "React", "Tailwind"] }
+    ]
+  },
+  {
+    num: "D74",
+    assignments: [
+      { name: "A74.1", stack: ["HTML", "CSS", "JS", "React", "Tailwind"] }
+    ]
+  },
+  {
+    num: "D78",
+    assignments: [
+      { name: "A78.1", stack: ["HTML", "CSS", "JS", "React", "Tailwind"] }
+    ]
+  },
+  {
+    num: "D87",
+    assignments: [
+      { name: "A87.1", stack: ["HTML", "CSS", "JS", "React", "Redux"] }
+    ]
+  }
 ];
 
 export default function Home() {
+  const [query, setQuery] = useState("");
+
+  const filteredDays = days
+    .map(d => {
+      if (d.num.toLowerCase().includes(query.toLowerCase())) {
+        return d;
+      }
+      const filteredAssignments = d.assignments.filter(a =>
+        a.name.toLowerCase().includes(query.toLowerCase()) ||
+        a.stack.some(tech => tech.toLowerCase().includes(query.toLowerCase()))
+      );
+      return { ...d, assignments: filteredAssignments };
+    })
+    .filter(d => d.assignments.length > 0);
+
   return (
     <main className="p-8 md:p-12 lg:p-16">
-      <h1 className="text-4xl md:text-5xl font-bold mb-10 text-center">
-        Devslane Assignment Hub
-      </h1>
+      <div className="flex items-center justify-center">
+        <img src="./favicon.ico" alt="Logo" />
+        <h1 className="text-4xl md:text-5xl font-bold mb-6 text-center">
+          Devslane Assignment Hub
+        </h1>
+      </div>
 
+      {/* Search bar */}
+      <div className="mb-8 flex justify-center">
+        <input
+          type="text"
+          placeholder="Search days, assignments, or tech..."
+          value={query}
+          onChange={e => setQuery(e.target.value)}
+          className="w-full max-w-md p-3 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+      </div>
+
+      {/* Assignment list */}
       <div className="space-y-12">
-        {days.map((d) => (
+        {filteredDays.map(d => (
           <section key={d.num}>
             <h2 className="text-2xl md:text-3xl font-semibold mb-6">{d.num}</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-              {d.assignments.map((a) => (
-                <Link
-                  key={a}
-                  href={`/projects/${d.num}/${a}`}
-                  className="p-5 text-center font-medium text-gray-800 bg-amber-300 rounded-xl shadow-md hover:bg-amber-400 hover:shadow-lg transition-all duration-200"
-                  aria-label={`Go to ${d.num} ${a}`}
-                >
-                  {a}
-                </Link>
+              {d.assignments.map(a => (
+                <div key={a.name} className="relative group">
+                  <Link
+                    href={`/projects/${d.num}/${a.name}`}
+                    className="block p-5 text-center font-medium text-gray-800 bg-amber-300 rounded-xl shadow-md hover:bg-amber-400 hover:shadow-lg transition-all duration-200"
+                  >
+                    {a.name}
+                  </Link>
+
+                  {/* Tooltip (hidden until hover) */}
+                  <div className="absolute left-1/2 -translate-x-1/2 mt-2 w-max bg-black text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
+                    {a.stack.join(", ")}
+                  </div>
+                </div>
               ))}
             </div>
           </section>
