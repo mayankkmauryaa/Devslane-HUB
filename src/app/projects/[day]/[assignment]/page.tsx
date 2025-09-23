@@ -50,7 +50,7 @@ export default function AssignmentPage() {
                 <div className="flex gap-2 items-center">
                     <Link href="/" className="hover:underline">Home</Link>
                     <span>&gt;</span>
-                    <Link href={`/projects/${day}`} className="hover:underline">{day}</Link>
+                    <Link href={`/`} className="hover:underline">{day}</Link>
                     <span>&gt;</span>
                     <span>{assignment}</span>
                 </div>

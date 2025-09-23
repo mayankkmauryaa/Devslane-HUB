@@ -59,25 +59,25 @@ const days = [
   {
     num: "D58",
     assignments: [
-      { name: "A58.1", stack: ["HTML", "CSS", "JS", "React", "Tailwind"] }
+      { name: "A58.1", stack: ["HTML", "CSS", "JS", "React", "Tailwind"], locked: true, reason: "This assignment is under review. Please check back later. [Router Error]" }
     ]
   },
   {
     num: "D59",
     assignments: [
-      { name: "A59.1", stack: ["HTML", "CSS", "JS", "React", "Tailwind"] }
+      { name: "A59.1", stack: ["HTML", "CSS", "JS", "React", "Tailwind"], locked: true, reason: "This assignment is under review. Please check back later. [Error 404 redirection issue]" }
     ]
   },
   {
     num: "D68",
     assignments: [
-      { name: "A68.1", stack: ["HTML", "CSS", "JS", "React", "Tailwind"] }
+      { name: "A68.1", stack: ["HTML", "CSS", "JS", "React", "Tailwind"], locked: true, reason: "This assignment is under review. Please check back later. [No rendering]" }
     ]
   },
   {
     num: "D71",
     assignments: [
-      { name: "A71.1", stack: ["HTML", "CSS", "JS", "React", "Tailwind"] }
+      { name: "A71.1", stack: ["HTML", "CSS", "JS", "React", "Tailwind"], locked: true, reason: "This assignment is under review. Please check back later. [Router Error]" }
     ]
   },
   {
@@ -89,7 +89,7 @@ const days = [
   {
     num: "D74",
     assignments: [
-      { name: "A74.1", stack: ["HTML", "CSS", "JS", "React", "Tailwind"] }
+      { name: "A74.1", stack: ["HTML", "CSS", "JS", "React", "Tailwind"], locked: true, reason: "This assignment is under review. Please check back later. [No redering]" }
     ]
   },
   {
@@ -148,21 +148,30 @@ export default function Home() {
           <section key={d.num}>
             <h2 className="text-2xl md:text-3xl font-semibold mb-6">{d.num}</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-              {d.assignments.map(a => (
-                <div key={a.name} className="relative group">
-                  <Link
-                    href={`/projects/${d.num}/${a.name}`}
-                    className="block p-5 text-center font-medium text-gray-800 bg-amber-300 rounded-xl shadow-md hover:bg-amber-400 hover:shadow-lg transition-all duration-200"
-                  >
-                    {a.name}
-                  </Link>
 
-                  {/* Tooltip (hidden until hover) */}
-                  <div className="absolute left-1/2 -translate-x-1/2 mt-2 w-max bg-black text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
-                    {a.stack.join(", ")}
+              {
+                d.assignments.map(a => (
+                  <div key={a.name} className="relative group">
+                    <Link
+                      href={`/projects/${d.num}/${a.name}`}
+                      className={`block p-5 text-center font-medium rounded-xl shadow-md transition-all duration-200
+        ${a.locked
+                          ? "bg-gray-300 text-gray-500 cursor-not-allowed hover:bg-gray-300"
+                          : "bg-amber-300 text-gray-800 hover:bg-amber-400 hover:shadow-lg"
+                        }`}
+                    >
+                      {a.name}
+                    </Link>
+
+                    {/* Tooltip */}
+                    <div className="absolute left-1/1 -translate-x-1/2 mt-2 w-max bg-black text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
+                      {a.locked ? a.reason : a.stack.join(", ")}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))
+              }
+
+
             </div>
           </section>
         ))}
