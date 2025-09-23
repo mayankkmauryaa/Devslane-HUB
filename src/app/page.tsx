@@ -173,19 +173,17 @@ export default function Home() {
                 <div key={a.name} className="relative group">
                   {a.locked ? (
                     // Locked assignment → not clickable
-                    <div
-                      className="block p-5 text-center font-medium rounded-xl shadow-md
-                   bg-gray-300 text-gray-500 cursor-not-allowed"
+                    <Link
+                      href={`/projects/${d.num}/${a.name}`}
+                      className="block p-5 text-center font-medium rounded-xl shadow-md bg-gray-300 text-gray-500 cursor-not-allowed"
                     >
                       {a.name}
-                    </div>
+                    </Link>
                   ) : (
                     // Unlocked assignment → clickable link
                     <Link
                       href={`/projects/${d.num}/${a.name}`}
-                      className="block p-5 text-center font-medium rounded-xl shadow-md
-                   bg-amber-300 text-gray-800 hover:bg-amber-400 hover:shadow-lg
-                   transition-all duration-200"
+                      className="block p-5 text-center font-medium rounded-xl shadow-md bg-amber-300 text-gray-800 hover:bg-amber-400 hover:shadow-lg transition-all duration-200"
                     >
                       {a.name}
                     </Link>
@@ -193,9 +191,7 @@ export default function Home() {
 
                   {/* Tooltip */}
                   <div
-                    className="absolute left-1/2 -translate-x-1/2 mt-2 w-max bg-black text-white text-xs rounded
-                 px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200
-                 pointer-events-none z-10"
+                    className="absolute left-1/2 -translate-x-1/2 mt-2 w-max bg-black text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10"
                   >
                     {a.locked ? a.reason : a.stack.join(", ")}
                   </div>
