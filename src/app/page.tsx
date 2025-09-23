@@ -146,7 +146,7 @@ export default function Home() {
   return (
     <main className="p-8 md:p-12 lg:p-16">
       <div className="flex items-center justify-center">
-        <Image src="/favicon.ico" alt="Logo" width={40} height={40} />
+        <Image src="/favicon.ico" alt="Logo" width={100} height={100} />
         <h1 className="text-4xl md:text-5xl font-bold mb-6 text-center">
           Devslane Assignment Hub
         </h1>
